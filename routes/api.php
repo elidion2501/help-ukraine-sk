@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Auth\AuthApiController;
+use App\Http\Controllers\Api\v1\Car\CarApiController;
+use App\Http\Controllers\Api\v1\City\CityApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('auth')->group(function () {
+    Route::post('/signUp', [AuthApiController::class, 'signUp']);
+    Route::post('/login', [AuthApiController::class, 'login']);
 });
+Route::post('/car', [CarApiController::class, 'store']);
+Route::get('/car', [CarApiController::class, 'index']);
+
+Route::get('/cities', [CityApiController::class, 'index']);
